@@ -13,6 +13,6 @@ jobs:
         uses: peter-evans/repository-dispatch@v2
         with:
           repository: 'username/repo-B'  # 替换为目标仓库
-          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # 使用 PAT
+          token: ${{ secrets.PAT_Token }}  # 使用 PAT
           event-type: 'build-trigger'  # 触发事件类型（根据目标仓库设置）
 
