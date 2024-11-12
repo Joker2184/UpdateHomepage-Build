@@ -31,7 +31,7 @@ def create_ini_file(version, build_time, github_time, save_path):
 
 if __name__ == "__main__":
     url = "https://api.github.com/repos/Hex-Dragon/PCL2/releases"
-    save_path = r"H:\UpdateHomepage"  # 保存路径
+    save_path = r"./github_output/"  # 保存路径
     
     # 确保保存目录存在
     if not os.path.exists(save_path):
