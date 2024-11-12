@@ -21,7 +21,7 @@
     <Grid.RowDefinitions>
     <RowDefinition Height="45" />
     </Grid.RowDefinitions>
-    <local:MyListItem Title="" Margin="-10,0,0,0" IsHitTestVisible="False" Info="#" Grid.Row="0" Grid.Column="1"/>
+    <local:MyListItem Title="Fix #5096" Margin="-10,0,0,0" IsHitTestVisible="False" Info="取消了音频播放错误之后的延迟" Grid.Row="0" Grid.Column="1"/>
     </Grid>
     </StackPanel>
     <TextBlock FontSize="16"><Bold>你可以帮忙的PR</Bold></TextBlock>
