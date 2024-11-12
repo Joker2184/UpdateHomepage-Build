@@ -4,15 +4,16 @@ on:
   push:
     branches:
       - main  # 监听 B 库的主分支更新
-
+      
 jobs:
   trigger-build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Trigger repository-dispatch in another repo
+      - name: Trigger A Repo Build
         uses: peter-evans/repository-dispatch@v2
         with:
-          repository: 'username/repo-B'  # 替换为目标仓库
-          token: ${{ secrets.PAT_Token }}  # 使用 PAT
-          event-type: 'build-trigger'  # 触发事件类型（根据目标仓库设置）
+          repository: 'Joker2184/HomepageBuilder'  # 替换为 A 库的 GitHub 仓库名
+          token: ${{ secrets.PAT_TOKEN }}  # 使用 GitHub 自动生成的令牌进行授权
+          event-type: trigger-a-build  # 触发 A 库构建的事件类型，可以自定义
 
