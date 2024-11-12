@@ -4,30 +4,43 @@ import os
 from datetime import datetime
 
 def get_latest_version(url):
-    response = requests.get(url)
-    response.raise_for_status()  # 确保请求成功
-    # 解析最新版本信息
-    releases = response.json()
-    if releases:
-        latest_version = releases[0]['tag_name']  # 最新版本号
-        return latest_version
-    else:
-        raise ValueError("无法找到最新版本号")
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # 确保请求成功
+        releases = response.json()
+        if releases:
+            latest_version = releases[0]['tag_name']  # 最新版本号
+            return latest_version
+        else:
+            raise ValueError("无法找到最新版本号")
+    except requests.exceptions.RequestException as e:
+        print(f"请求错误: {e}")
+        raise
+    except ValueError as e:
+        print(f"解析错误: {e}")
+        raise
 
 def create_json_file(version, save_path):
-    data = {"Title": version}
-    filename = os.path.join(save_path, "UpdateHomepage.json")  # 固定保存为 UpdateHomepage.json
-    with open(filename, 'w') as json_file:
-        json.dump(data, json_file, indent=4)
-    return filename
+    try:
+        data = {"Title": version}
+        filename = os.path.join(save_path, "UpdateHomepage.json")  # 固定保存为 UpdateHomepage.json
+        with open(filename, 'w') as json_file:
+            json.dump(data, json_file, indent=4)
+        return filename
+    except Exception as e:
+        print(f"创建 JSON 文件时发生错误: {e}")
+        raise
 
 def create_ini_file(version, build_time, github_time, save_path):
-    # 格式化为所需内容
-    ini_data = f"PCL Version: {version}\nHomepage Version: {version}\nBuilder Time: {build_time}\nUpdate Time: {github_time}"
-    ini_filename = os.path.join(save_path, "UpdateHomepage.xaml.ini")  # 指定保存路径
-    with open(ini_filename, 'w') as ini_file:
-        ini_file.write(ini_data)  # 写入没有空行的格式
-    return ini_filename
+    try:
+        ini_data = f"PCL Version: {version}\nHomepage Version: {version}\nBuilder Time: {build_time}\nUpdate Time: {github_time}"
+        ini_filename = os.path.join(save_path, "UpdateHomepage.xaml.ini")  # 指定保存路径
+        with open(ini_filename, 'w') as ini_file:
+            ini_file.write(ini_data)  # 写入没有空行的格式
+        return ini_filename
+    except Exception as e:
+        print(f"创建 INI 文件时发生错误: {e}")
+        raise
 
 if __name__ == "__main__":
     url = "https://api.github.com/repos/Hex-Dragon/PCL2/releases"
