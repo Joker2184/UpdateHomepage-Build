@@ -1,0 +1,11 @@
+name: versions
+fill:
+  Image_link: ${I_Link}
+  version-id: ${file_name}
+  title: 📰 ${file_name}
+  date:  ${dat}
+  templates:
+    - NewsCard
+    - Raw
+
+    

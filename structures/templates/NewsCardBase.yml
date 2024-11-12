@@ -1,0 +1,7 @@
+components:
+ - New
+ - FlowDocumentViewer
+base: Card
+filter:
+   file_exten:
+      - md
