@@ -3,7 +3,7 @@ fill:
   Image_link: ${I_Link}
   version-id: ${file_name}
   title: 📰 ${file_name}
-  date:  ${dat}
+  Updatedate:  ${date}
   templates:
     - NewsCard
     - Raw
