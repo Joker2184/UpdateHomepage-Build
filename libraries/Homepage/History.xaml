@@ -1,5 +1,3 @@
-<ContentControl Content="历 史 版 本 " Template="{StaticResource Separator}" Margin="0,15,0,0"/>
-
 <local:MyCard Title="文章存档" Margin="0,5">
     <StackPanel Margin="25,40,23,15">
     <Grid>
