@@ -1,19 +1,27 @@
-name: Trigger A Repo Build
+name: Trigger A and C Repo Builds
 
 on:
   push:
     branches:
-      - main  # 监听 B 库的主分支更新，确保 B 库的更新能够触发这个工作流
+      - main  # 监听 B 仓库的主分支更新，确保 B 仓库的更新能够触发这个工作流
 
 jobs:
-  trigger-build:
+  trigger-builds:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. 触发 A 库的构建
+      # 1. 触发 A 仓库（HomepageBuilder）的构建
       - name: Trigger A Repo Build
         uses: peter-evans/repository-dispatch@v2
         with:
-          repository: 'Joker2184/HomepageBuilder'  # A 库的 GitHub 仓库名
+          repository: 'Joker2184/HomepageBuilder'  # A 仓库的 GitHub 仓库名
           token: ${{ secrets.PAT_TOKEN }}  # 使用 GitHub 自动生成的 PAT 令牌进行授权
-          event-type: trigger-a-build  # A 库触发的事件类型，可以自定义，这里是 trigger-a-build
+          event-type: trigger-a-build  # A 仓库触发的事件类型，可以自定义，这里是 trigger-a-build
+
+      # 2. 触发 D 仓库（UpdateHP-Built-Modules）的构建
+      - name: Trigger C Repo Build
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          repository: 'Joker2184/UpdateHP-Built-Modules'  # C 仓库的 GitHub 仓库名
+          token: ${{ secrets.PAT_TOKEN }}  # 使用 GitHub 自动生成的 PAT 令牌进行授权
+          event-type: trigger-d-build  # D 仓库触发的事件类型，可以自定义，这里是 trigger-d-build
