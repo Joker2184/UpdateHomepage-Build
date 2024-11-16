@@ -27,7 +27,8 @@ jobs:
     # 3. 删除现有的 PRList.xaml 文件
     - name: Delete existing PRList.xaml in UpdateHomepage-Build
       run: |
-        rm -f UpdateHomepage-Build/libraries/Homepage/PRList.xaml  # 删除旧文件
+        cd UpdateHomepage-Build
+        rm -f libraries/Homepage/PRList.xaml  # 删除旧文件
 
     # 4. 安装 Python 环境和依赖
     - name: Set up Python
