@@ -9,7 +9,6 @@ GITHUB_API_URL = "https://api.github.com/repos/Hex-Dragon/PCL2/pulls"
 PAT_TOKEN = os.getenv("PAT_TOKEN")  # 从环境变量中获取 Token
 if not PAT_TOKEN:
     raise ValueError("PAT_TOKEN 环境变量未设置。")
-
 headers = {
     'Authorization': f'Bearer {PAT_TOKEN}',  # 使用 Bearer Token 认证
     'Accept': 'application/vnd.github.v3+json'
@@ -108,19 +107,14 @@ workspace = os.getenv("GITHUB_WORKSPACE")
 if not workspace:
     raise ValueError("GITHUB_WORKSPACE 环境变量未设置。")
 
-# 获取 PR 数据
 pr_data = get_pull_requests()
 
 if not pr_data:
     print("未获取到任何 PR 数据，可能是当前没有打开的 Pull Requests。")
 else:
-    # 修正文件路径，避免多余的目录嵌套
-    output_json = os.path.join(workspace, "UpdateHomepage-Build", "PRDatabase.json")  # 保持文件在 UpdateHomepage-Build 目录
-    output_xaml = os.path.join(workspace, "UpdateHomepage-Build", "libraries", "Homepage", "PRList.xaml")  # 确保路径正确
+    # 拼接路径到 GITHUB_WORKSPACE，保存到 UpdateHomepage-Build 目录
+    output_json = os.path.join(workspace, "UpdateHomepage-Build", "PRDatabase.json")  # 保存到工作目录的 UpdateHomepage-Build 目录
+    output_xaml = os.path.join(workspace, "UpdateHomepage-Build", "libraries", "Homepage", "PRList.xaml")  # 保存到指定文件夹
 
-    # 调试输出
-    print(f"Saving PR data to JSON: {output_json}")
-    print(f"Saving PR data to XAML: {output_xaml}")
-    
     save_to_json(pr_data, output_json)
     save_to_xaml(generate_template(pr_data[0]), output_xaml)
