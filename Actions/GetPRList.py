@@ -110,13 +110,10 @@ if not workspace:
 # 输出当前工作目录进行调试
 print(f"当前工作目录: {os.getcwd()}")
 
-output_json = os.path.join(workspace, "PRDatabase.json")  # 使用绝对路径
-output_xaml = os.path.join(workspace, "libraries/Homepage/PRList.xaml")  # 使用绝对路径
+# 确保文件保存路径正确
+output_json = "PRDatabase.json"  # 确保使用相对路径
+output_xaml = "UpdateHomepage-Build/libraries/Homepage/PRList.xaml"  # 以相对路径保存到正确位置
 
-pr_data = get_pull_requests()
+save_to_json(pr_data, output_json)
+save_to_xaml(generate_template(pr_data[0]), output_xaml)
 
-if not pr_data:
-    print("未获取到任何 PR 数据，可能是当前没有打开的 Pull Requests。")
-else:
-    save_to_json(pr_data, output_json)
-    save_to_xaml(generate_template(pr_data[0]), output_xaml)
