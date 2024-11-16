@@ -115,5 +115,5 @@ output_json = "PRDatabase.json"  # 确保使用相对路径
 output_xaml = "UpdateHomepage-Build/libraries/Homepage/PRList.xaml"  # 以相对路径保存到正确位置
 
 save_to_json(pr_data, output_json)
-save_to_xaml(generate_template(pr_data[0]), output_xaml)
+save_to_xaml(generate_template(pr_data, output_xaml)
 
