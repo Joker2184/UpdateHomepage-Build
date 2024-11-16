@@ -60,7 +60,7 @@ jobs:
     # 8. 确认文件是否存在
     - name: Confirm file exists before commit
       run: |
-        ls -l $GITHUB_WORKSPACE/UpdateHomepage-Build/libraries/Homepage/PRList.xaml
+        ls -l ./UpdateHomepage-Build/libraries/Homepage/PRList.xaml
 
     # 9. 检查 Git 状态，确保文件已经被跟踪
     - name: Check git status
