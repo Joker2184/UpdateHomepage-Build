@@ -113,8 +113,8 @@ if not pr_data:
     print("未获取到任何 PR 数据，可能是当前没有打开的 Pull Requests。")
 else:
     # 直接保存到根目录下的 JSON 文件
-    output_json = "./UpdateHomepage-Build/"  # 不用 os.path.join 直接指定文件名
-    output_xaml = "./UpdateHomepage-Build/libraries/Homepage/"  # 保存到 UpdateHomepage-Build/libraries/Homepage
+    output_json = "./UpdateHomepage-Build/PRDatabase.json"  # 确保指定文件名
+    output_xaml = "./UpdateHomepage-Build/libraries/Homepage/PRList.xaml"  # 保存到 UpdateHomepage-Build/libraries/Homepage
     
     save_to_json(pr_data, output_json)
     save_to_xaml(generate_template(pr_data[0]), output_xaml)
