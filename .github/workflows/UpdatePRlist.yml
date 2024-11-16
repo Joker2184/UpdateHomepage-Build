@@ -32,7 +32,7 @@ jobs:
     # 4. 删除现有的 PRList.xaml 文件
     - name: Delete existing PRList.xaml in UpdateHomepage-Build
       run: |
-        rm -f UpdateHomepage-Build/libraries/Homepage/PRList.xaml  # 删除旧文件
+        rm -f ./UpdateHomepage-Build/libraries/Homepage/PRList.xaml  # 删除旧文件
 
     # 5. 安装 Python 环境和依赖
     - name: Set up Python
@@ -62,8 +62,8 @@ jobs:
     # 8. 提交并推送 PRList.xaml 文件到 UpdateHomepage-Build 仓库
     - name: Commit and push PRList.xaml to UpdateHomepage-Build
       run: |
-        cd UpdateHomepage-Build
+        cd UpdateHomepage-Build  # 进入仓库目录
         git status  # 查看 Git 状态，确保文件已被跟踪
-        git add libraries/Homepage/PRList.xaml  # 添加文件
+        git add libraries/  # 添加 libraries 目录下的所有更改文件
         git commit -m "Update PRList.xaml"  # 提交
         git push origin main  # 推送到 main 分支
