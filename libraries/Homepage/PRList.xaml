@@ -22,7 +22,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="45" />
                 </Grid.RowDefinitions>
-                <local:MyListItem Title="[新功能] LittleSkin OAuth 登陆支持 #5120" Margin="-10,0,0,0" IsHitTestVisible="False" Info="由于学校调休，得等到晚上再推送代码，先挂着Close #4941 关联投票 #4948 " Grid.Row="0" Grid.Column="1"/>
+                <local:MyListItem Title="Testttt #Number" Margin="-10,0,0,0" IsHitTestVisible="False" Info="Test Close1111 Open2222" Grid.Row="0" Grid.Column="1"/>
             </Grid>
         </StackPanel>
         <TextBlock FontSize="16"><Bold>你可以帮忙的PR</Bold></TextBlock>
