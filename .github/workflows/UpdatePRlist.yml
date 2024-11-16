@@ -57,10 +57,6 @@ jobs:
         git config --global user.name "Joker2184Bot"
         git config --global user.email "Joker2184@outlook.com"
 
-    # 8. 确认文件是否存在
-    - name: Confirm file exists before commit
-      run: |
-        ls -l ./libraries/Homepage/PRList.xaml
 
     # 9. 检查 Git 状态，确保文件已经被跟踪
     - name: Check git status
