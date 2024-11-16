@@ -57,21 +57,21 @@ jobs:
         git config --global user.name "Joker2184Bot"
         git config --global user.email "Joker2184@outlook.com"
 
-    # 8. 提交并推送 PRList.xaml 文件到 UpdateHomepage-Build 仓库
+    # 8. 确认文件是否存在
+    - name: Confirm file exists before commit
+      run: |
+        ls -l $GITHUB_WORKSPACE/UpdateHomepage-Build/libraries/Homepage/PRList.xaml
+
+    # 9. 检查 Git 状态，确保文件已经被跟踪
+    - name: Check git status
+      run: |
+        cd UpdateHomepage-Build
+        git status
+
+    # 10. 提交并推送 PRList.xaml 文件到 UpdateHomepage-Build 仓库
     - name: Commit and push PRList.xaml to UpdateHomepage-Build
       run: |
         cd UpdateHomepage-Build
-        git status  # 查看 Git 状态，确保文件已被跟踪
         git add libraries/Homepage/PRList.xaml  # 添加文件
         git commit -m "Update PRList.xaml"  # 提交
         git push origin main  # 推送到 main 分支
-
-    # 9. 确认文件是否存在
-    - name: List files in the libraries/Homepage directory
-      run: |
-        if [ -d "$GITHUB_WORKSPACE/UpdateHomepage-Build/libraries/Homepage" ]; then
-          echo "Directory exists."
-          ls -l $GITHUB_WORKSPACE/UpdateHomepage-Build/libraries/Homepage/PRList.xaml
-        else
-          echo "Directory does not exist."
-        fi
