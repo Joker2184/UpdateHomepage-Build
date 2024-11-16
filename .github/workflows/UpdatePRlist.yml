@@ -54,11 +54,10 @@ jobs:
         git config --global user.name "Joker2184Bot"
         git config --global user.email "Joker2184@outlook.com"
 
-    # 7. 提交并推送 PRList.xaml 文件到 UpdateHomepage-Build 仓库
+    # 7. 添加更改，提交并推送 PRList.xaml 文件到 UpdateHomepage-Build 仓库
     - name: Commit and push PRList.xaml to UpdateHomepage-Build
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.PAT_TOKEN }}  # 使用 PAT Token 进行身份认证
-        repository: Joker2184/UpdateHomepage-Build  # 目标仓库
-        branch: main  # 推送到 main 分支
-        directory: . # 提交目录
+      run: |
+        cd UpdateHomepage-Build  # 确保在正确的仓库目录下
+        git add libraries/Homepage/PRList.xaml  # 添加更改
+        git commit -m "Update PRList.xaml"  # 提交更改
+        git push origin main  # 推送到主分支
