@@ -56,7 +56,7 @@ jobs:
 
     # 7. 提交并推送 PRList.xaml 文件到 UpdateHomepage-Build 仓库
     - name: Commit and push PRList.xaml to UpdateHomepage-Build
-      uses: ad-m/github-push-action@main
+      uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.PAT_TOKEN }}  # 使用 PAT Token 进行身份认证
         repository: Joker2184/UpdateHomepage-Build  # 目标仓库
