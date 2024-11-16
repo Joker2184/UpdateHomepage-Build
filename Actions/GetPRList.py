@@ -114,9 +114,9 @@ pr_data = get_pull_requests()
 if not pr_data:
     print("未获取到任何 PR 数据，可能是当前没有打开的 Pull Requests。")
 else:
-    # 修改文件路径，避免路径重复
-    output_json = os.path.join(workspace, "UpdateHomepage-Build", "PRDatabase.json")  # 保持文件在仓库根目录
-    output_xaml = os.path.join(workspace, "UpdateHomepage-Build", "libraries", "Homepage", "PRList.xaml")
+    # 修正文件路径，避免多余的目录嵌套
+    output_json = os.path.join(workspace, "UpdateHomepage-Build", "PRDatabase.json")  # 保持文件在 UpdateHomepage-Build 目录
+    output_xaml = os.path.join(workspace, "UpdateHomepage-Build", "libraries", "Homepage", "PRList.xaml")  # 确保路径正确
     
     # 调试输出
     print(f"Saving PR data to JSON: {output_json}")
