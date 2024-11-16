@@ -27,8 +27,7 @@ jobs:
     # 3. 删除现有的 PRList.xaml 文件
     - name: Delete existing PRList.xaml in UpdateHomepage-Build
       run: |
-        cd UpdateHomepage-Build
-        rm -f libraries/Homepage/PRList.xaml  # 删除旧文件
+        rm -f UpdateHomepage-Build/libraries/Homepage/PRList.xaml  # 删除旧文件
 
     # 4. 安装 Python 环境和依赖
     - name: Set up Python
@@ -49,11 +48,28 @@ jobs:
         cd UpdateHomepage-Build/Actions  # 进入 Python 脚本所在的目录
         python GetPRList.py  # 运行 Python 脚本生成 PRList.xaml 文件
 
-    # 6. 提交并推送 PRList.xaml 文件到 UpdateHomepage-Build 仓库
-    - name: Commit and push PRList.xaml to UpdateHomepage-Build
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.PAT_TOKEN }}  # 使用 PAT Token 进行身份认证
-        repository: Joker2184/UpdateHomepage-Build  # 目标仓库
-        branch: main  # 推送到 main 分支
-        directory: UpdateHomepage-Build  # 提交目录
+    # 6. 检查 git 状态，确保文件被正确添加
+    - name: Check git status
+      run: |
+        cd UpdateHomepage-Build
+        git status  # 查看当前状态，确认文件是否已添加
+
+    # 7. 提交并推送 PRList.xaml 文件到 UpdateHomepage-Build 仓库
+    - name: Commit changes to UpdateHomepage-Build
+      run: |
+        cd UpdateHomepage-Build
+        git add libraries/Homepage/PRList.xaml  # 添加新的文件
+        git commit -m "Update PR list"  # 提交更新
+        git status  # 检查是否有提交
+
+    # 8. 推送更新到 GitHub 仓库
+    - name: Push changes to UpdateHomepage-Build repository
+      run: |
+        cd UpdateHomepage-Build
+        git push https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/Joker2184/UpdateHomepage-Build.git HEAD:main  # 推送到目标仓库的 main 分支
+
+    # 9. 提交成功后，确认文件已经推送
+    - name: Confirm changes pushed to GitHub
+      run: |
+        git pull origin main  # 拉取远程更新
+        git log -n 1  # 查看最新的提交日志，确认是否已经提交
