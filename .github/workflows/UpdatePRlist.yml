@@ -61,4 +61,4 @@ jobs:
         github_token: ${{ secrets.PAT_TOKEN }}  # 使用 PAT Token 进行身份认证
         repository: Joker2184/UpdateHomepage-Build  # 目标仓库
         branch: main  # 推送到 main 分支
-        directory: UpdateHomepage-Build  # 提交目录
+        directory: . # 提交目录
