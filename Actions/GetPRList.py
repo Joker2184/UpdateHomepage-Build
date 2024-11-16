@@ -102,7 +102,7 @@ pr_data = get_pull_requests()
 if not pr_data:
     print("未获取到任何 PR 数据，可能是当前没有打开的 Pull Requests。")
 else:
-    output_json = os.path.join(workspace, "UpdateHP-Built-Modules", "PRDatabase.json")
-    output_xaml = os.path.join(workspace, "UpdateHP-Built-Modules", "libraries", "Homepage", "PRList.xaml")
+    output_json = os.path.join(workspace, "UpdateHomepage-Build", "PRDatabase.json")
+    output_xaml = os.path.join(workspace, "UpdateHomepage-Build", "libraries", "Homepage", "PRList.xaml")
     save_to_json(pr_data, output_json)
     save_to_xaml(generate_template(pr_data[0]), output_xaml)
