@@ -107,15 +107,16 @@ workspace = os.getenv("GITHUB_WORKSPACE")
 if not workspace:
     raise ValueError("GITHUB_WORKSPACE 环境变量未设置。")
 
+# 输出当前工作目录进行调试
+print(f"当前工作目录: {os.getcwd()}")
+
+output_json = os.path.join(workspace, "PRDatabase.json")  # 使用绝对路径
+output_xaml = os.path.join(workspace, "libraries/Homepage/PRList.xaml")  # 使用绝对路径
+
 pr_data = get_pull_requests()
 
 if not pr_data:
     print("未获取到任何 PR 数据，可能是当前没有打开的 Pull Requests。")
 else:
-    # 直接保存到根目录下的 JSON 文件
-      output_json = "PRDatabase.json"  # 直接使用相对路径
-      output_xaml = "libraries/Homepage/PRList.xaml"  # 使用相对路径
-
-    
     save_to_json(pr_data, output_json)
     save_to_xaml(generate_template(pr_data[0]), output_xaml)
