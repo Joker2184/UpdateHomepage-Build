@@ -111,8 +111,8 @@ if not workspace:
 print(f"当前工作目录: {os.getcwd()}")
 
 # 确保文件保存路径正确
-output_json = "PRDatabase.json"  # 确保使用相对路径
-output_xaml = "UpdateHomepage-Build/libraries/Homepage/PRList.xaml"  # 以相对路径保存到正确位置
+output_json = "./UpdateHomepage-Build/Save/PRDatabase.json"
+output_xaml = "./UpdateHomepage-Build/Save/PRList.xaml"
 
 save_to_json(pr_data, output_json)
 save_to_xaml(generate_template(pr_data, output_xaml)
