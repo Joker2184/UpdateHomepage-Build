@@ -1,5 +1,3 @@
-name: Get PR List and Update Homepage
-
 # 触发规则
 on:
   schedule:
@@ -53,28 +51,27 @@ jobs:
         cd UpdateHomepage-Build/Actions  # 进入 Python 脚本所在的目录
         python GetPRList.py  # 运行 Python 脚本生成 PRList.xaml 文件
 
-    # 7. 检查生成的 PRList.xaml 文件是否存在
-    - name: Check if PRList.xaml exists and was modified
-      run: |
-        ls -l ./UpdateHomepage-Build/libraries/Homepage/PRList.xaml  # 查看文件是否存在
-        git diff  # 查看文件是否有变化
-
-    # 8. 设置 git 用户凭证
+    # 7. 设置 git 用户凭证
     - name: Set up git user credentials
       run: |
         git config --global user.name "Joker2184Bot"
         git config --global user.email "Joker2184@outlook.com"
 
-    # 9. 查看 Git 状态，确保文件已经被跟踪
-    - name: Check git status
-      run: |
-        cd UpdateHomepage-Build  # 确保在正确的目录
-        git status  # 查看当前 Git 状态，是否有未提交的文件
-
-    # 10. 强制提交修改
+    # 8. 提交并推送 PRList.xaml 文件到 UpdateHomepage-Build 仓库
     - name: Commit and push PRList.xaml to UpdateHomepage-Build
       run: |
-        cd UpdateHomepage-Build  # 进入仓库目录
-        git add -A  # 强制添加所有修改过的文件
-        git commit -m "Update PRList.xaml"  # 提交修改
+        cd UpdateHomepage-Build
+        git status  # 查看 Git 状态，确保文件已被跟踪
+        git add libraries/Homepage/PRList.xaml  # 添加文件
+        git commit -m "Update PRList.xaml"  # 提交
         git push origin main  # 推送到 main 分支
+
+    # 9. 确认文件是否存在
+    - name: List files in the libraries/Homepage directory
+      run: |
+        if [ -d "$GITHUB_WORKSPACE/UpdateHomepage-Build/libraries/Homepage" ]; then
+          echo "Directory exists."
+          ls -l $GITHUB_WORKSPACE/UpdateHomepage-Build/libraries/Homepage/PRList.xaml
+        else
+          echo "Directory does not exist."
+        fi
