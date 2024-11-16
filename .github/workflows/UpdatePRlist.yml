@@ -18,17 +18,16 @@ jobs:
         repository: Joker2184/UpdateHomepage-Build
         path: UpdateHomepage-Build  # 将该仓库代码检出到子目录
 
-    # 2. 拉取最新的代码 (避免冲突)
+    # 2. 展示根目录的文件结构
+    - name: List files in the root directory
+      run: |
+        ls -R  # 列出根目录的所有文件及子目录
+
+    # 3. 拉取最新的代码 (避免冲突)
     - name: Pull latest changes from UpdateHomepage-Build
       run: |
         cd UpdateHomepage-Build
         git pull origin main  # 拉取最新的主分支代码
-
-    # 3. 展示目录结构
-    - name: List files in UpdateHomepage-Build directory
-      run: |
-        cd UpdateHomepage-Build  # 确保我们在正确的目录下
-        ls -R  # 列出所有文件及子目录
 
     # 4. 删除现有的 PRList.xaml 文件
     - name: Delete existing PRList.xaml in UpdateHomepage-Build
