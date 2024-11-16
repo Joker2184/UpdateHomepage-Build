@@ -110,10 +110,16 @@ if not workspace:
 # 输出当前工作目录进行调试
 print(f"当前工作目录: {os.getcwd()}")
 
-# 确保文件保存路径正确
-output_json = "./UpdateHomepage-Build/Save/PRDatabase.json"
-output_xaml = "./UpdateHomepage-Build/Save/PRList.xaml"
+# 获取 Pull Requests 数据
+pr_data = get_pull_requests()
 
-save_to_json(pr_data, output_json)
-save_to_xaml(generate_template(pr_data, output_xaml)
+if not pr_data:
+    print("未获取到任何 PR 数据，可能是当前没有打开的 Pull Requests。")
+else:
+    # 确保文件保存路径正确
+    output_json = "./UpdateHomepage-Build/Save/PRDatabase.json"
+    output_xaml = "./UpdateHomepage-Build/Save/PRList.xaml"
 
+    # 保存文件
+    save_to_json(pr_data, output_json)
+    save_to_xaml(generate_template(pr_data[0]), output_xaml)
