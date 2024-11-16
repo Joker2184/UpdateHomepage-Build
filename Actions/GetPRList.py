@@ -3,20 +3,24 @@ import requests
 import re
 import json
 from typing import List
+
 # GitHub API Token 和仓库信息
 GITHUB_API_URL = "https://api.github.com/repos/Hex-Dragon/PCL2/pulls"
 PAT_TOKEN = os.getenv("PAT_TOKEN")  # 从环境变量中获取 Token
 if not PAT_TOKEN:
     raise ValueError("PAT_TOKEN 环境变量未设置。")
+
 headers = {
     'Authorization': f'Bearer {PAT_TOKEN}',  # 使用 Bearer Token 认证
     'Accept': 'application/vnd.github.v3+json'
 }
+
 def ensure_directory_exists(file_path: str):
     """确保文件路径中的目录存在"""
     dir_path = os.path.dirname(file_path)
     if not os.path.exists(dir_path):
         os.makedirs(dir_path)
+
 def get_pull_requests() -> List[dict]:
     """获取 GitHub 的 Pull Requests 数据"""
     try:
@@ -36,9 +40,11 @@ def get_pull_requests() -> List[dict]:
     except Exception as e:
         print(f"发生未知错误: {e}")
         raise
+
 def clean_text(text: str) -> str:
     """清理文本中的换行符"""
     return re.sub(r'(\r\n|\n|\r)', '', text)
+
 def generate_template(pr: dict) -> str:
     """根据 Pull Request 数据生成 XML 模板"""
     title = clean_text(pr.get('title', ''))
@@ -76,6 +82,7 @@ def generate_template(pr: dict) -> str:
 </local:MyCard>
     """
     return xml_template
+
 def save_to_json(content: dict, filename: str):
     """将生成的 PR 数据保存为 JSON 文件"""
     try:
@@ -85,6 +92,7 @@ def save_to_json(content: dict, filename: str):
         print(f"PR 数据已保存到: {filename}")
     except Exception as e:
         print(f"保存文件 {filename} 时出错: {e}")
+
 def save_to_xaml(content: str, filename: str):
     """将生成的模板保存为 XAML 文件"""
     try:
@@ -94,15 +102,25 @@ def save_to_xaml(content: str, filename: str):
         print(f"文件已保存到: {filename}")
     except Exception as e:
         print(f"保存文件 {filename} 时出错: {e}")
+
 # 主逻辑
 workspace = os.getenv("GITHUB_WORKSPACE")
 if not workspace:
     raise ValueError("GITHUB_WORKSPACE 环境变量未设置。")
+
+# 获取 PR 数据
 pr_data = get_pull_requests()
+
 if not pr_data:
     print("未获取到任何 PR 数据，可能是当前没有打开的 Pull Requests。")
 else:
-    output_json = os.path.join(workspace, "UpdateHomepage-Build", "PRDatabase.json")
+    # 修改文件路径，避免路径重复
+    output_json = os.path.join(workspace, "UpdateHomepage-Build", "PRDatabase.json")  # 保持文件在仓库根目录
     output_xaml = os.path.join(workspace, "UpdateHomepage-Build", "libraries", "Homepage", "PRList.xaml")
+    
+    # 调试输出
+    print(f"Saving PR data to JSON: {output_json}")
+    print(f"Saving PR data to XAML: {output_xaml}")
+    
     save_to_json(pr_data, output_json)
     save_to_xaml(generate_template(pr_data[0]), output_xaml)
