@@ -9,9 +9,8 @@ if [ -e "$file_path" ]; then
 else
     echo "文件不存在，正在更新"
     echo "---\nnew: \"true\"\n---\n" > $file_path
+    sed -i "2s/.*/- \"${version}\"/" pages/UpdateHomepage.yml
 fi
-
-sed -i '' "2s/.*/- \"${version}\"/" pages/UpdateHomepage.yml
 
 git config --local user.email "github-actions[bot]@users.noreply.github.com"
 git config --local user.name "github-actions[bot]"
