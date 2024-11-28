@@ -1,8 +1,7 @@
 version=$(gh api \
     -H "Accept: application/vnd.github+json" \
     -H "X-GitHub-Api-Version: 2022-11-28" \
-    repos/Hex-Dragon/PCL2/releases \ 
-    | grep tag_name | head -n 1 | cut -d '"' -f 4)
+    repos/Hex-Dragon/PCL2/releases | jq | grep tag_name | head -n 1 | cut -d '"' -f 4)
 
 file_path="libraries/$version.md"
 if [ -e "$file_path" ]; then
