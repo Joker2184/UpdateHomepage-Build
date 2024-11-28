@@ -1,0 +1,5 @@
+components:
+ - Loading
+base: Card
+filter:
+   new: true

@@ -5,6 +5,7 @@ fill:
   title: 📰 ${file_name}
   Updatedate:  ${date}
   templates:
+    - NewVersion
     - NewsCard
     - Raw
 
