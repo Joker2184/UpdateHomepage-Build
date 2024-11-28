@@ -1,7 +1,4 @@
-components:
- - New
- - FlowDocumentViewer
-base: Card
+c
 filter:
    file_exten:
       - md
