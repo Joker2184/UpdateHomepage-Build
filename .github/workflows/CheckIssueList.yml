@@ -1,17 +1,19 @@
 name: Check Issue List
+
 on:
-   schedule:
-    - cron:  '0/1 * * * *'
-   workflow_dispatch:
-      
+  schedule:
+    - cron: '0/1 * * * *'  # 每分钟触发一次
+  workflow_dispatch:  # 允许手动触发
+
 jobs:
-   check-pcl:
-      runs-on: ubuntu-latest
-      steps:
-       - name: 签出储存库
-         uses: actions/checkout@v4
-       - name: 运行更新脚本
-         id: run_script
-         run: sh Actions/CheckIssueList.sh
-         env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  check-pcl:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 签出储存库
+        uses: actions/checkout@v4
+
+      - name: 运行更新脚本
+        id: run_script
+        run: bash Actions/CheckIssueList.sh  # 修改为使用 bash 执行脚本
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
