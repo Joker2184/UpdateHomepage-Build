@@ -3,7 +3,7 @@ issues=$(gh api -H "Accept: application/vnd.github+json" \
     repos/Hex-Dragon/PCL2/issues?state=open&per_page=10)
 
 # 提取 Issue 编号和标题
-for i in {0..9}; do
+for i in $(seq 0 9); do
     number[$i]=$(echo "$issues" | jq -r ".[$i].number")
     title[$i]=$(echo "$issues" | jq -r ".[$i].title")
 done
@@ -57,7 +57,7 @@ else
 EOF
 
     # 动态填入 Issue 编号和标题
-    for i in {0..9}; do
+    for i in $(seq 0 9); do
         cat <<EOF >> "$file_path"
                 <local:MyListItem Title="Issue#${number[$i]}" Margin="5,0,0,0" IsHitTestVisible="False" Info="${title[$i]}" Grid.Row="$i" Grid.Column="1"/>
 EOF
