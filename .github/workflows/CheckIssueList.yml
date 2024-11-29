@@ -16,4 +16,4 @@ jobs:
         id: run_script
         run: bash Actions/CheckIssueList.sh  # 修改为使用 bash 执行脚本
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
