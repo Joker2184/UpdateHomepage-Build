@@ -11,6 +11,9 @@ jobs:
     steps:
       - name: 签出储存库
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT_TOKEN }}  # 使用 PAT_TOKEN 进行授权
+
 
       - name: 运行更新脚本
         id: run_script
