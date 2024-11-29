@@ -8,14 +8,6 @@ title=$(gh api -H "Accept: application/vnd.github+json" \
 file_path="libraries/Homepage/PR#$number.xaml"
 previous_file_path="libraries/Homepage/PR#$((number - 1)).xaml"
 
-# 删除旧的 PR 文件（如果存在）
-if [ -e "$previous_file_path" ]; then
-    echo "删除旧的 XAML 文件: $previous_file_path"
-    rm "$previous_file_path"
-else
-    echo "没有找到旧的 XAML 文件，继续更新"
-fi
-
 # 判断是否存在该文件
 if [ -e "$file_path" ]; then
     echo "文件存在，无需更改"
@@ -66,6 +58,14 @@ else
 EOF
     # 更新 pages/UpdateHomepage.yml 的第 6 行
     sed -i "6s/.*/- PR#$number/" pages/UpdateHomepage.yml
+fi
+
+# 删除旧的 PR 文件（如果存在）
+if [ -e "$previous_file_path" ]; then
+    echo "删除旧的 XAML 文件: $previous_file_path"
+    rm "$previous_file_path"
+else
+    echo "没有找到旧的 XAML 文件，继续更新"
 fi
 
 # 配置 Git 提交信息并推送
