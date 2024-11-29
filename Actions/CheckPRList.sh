@@ -65,7 +65,7 @@ if [ -e "$previous_file_path" ]; then
     echo "删除旧的 XAML 文件: $previous_file_path"
     rm "$previous_file_path"
 else
-    echo "没有找到旧的 XAML 文件，继续更新"
+    echo "没有找到旧的 XAML 文件，Github提交推送"
 fi
 
 # 配置 Git 提交信息并推送
