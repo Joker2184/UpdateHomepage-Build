@@ -1,1 +1,17 @@
-
+name: Check PR List
+on:
+   schedule:
+    - cron:  '0/30 * * * *'
+   workflow_dispatch:
+      
+jobs:
+   check-pcl:
+      runs-on: ubuntu-latest
+      steps:
+       - name: 签出储存库
+         uses: actions/checkout@v4
+       - name: 运行更新脚本
+         id: run_script
+         run: sh Actions/CheckPRList.sh
+         env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
