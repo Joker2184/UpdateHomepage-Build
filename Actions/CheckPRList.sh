@@ -55,7 +55,7 @@ else
     </StackPanel>
 </local:MyCard>
 EOF
-    sed -i "5s/.*/- PR#$number/" pages/UpdateHomepage.yml
+    sed -i "6s/.*/- PR#$number/" pages/UpdateHomepage.yml
 fi
 
 # 配置 Git 提交信息并推送
