@@ -1,20 +1,31 @@
-# 获取最新 PR 的编号和标题
-number=$(gh api -H "Accept: application/vnd.github+json" \
-    repos/Hex-Dragon/PCL2/pulls | jq -r 'sort_by(.created_at) | last | .number')
-title=$(gh api -H "Accept: application/vnd.github+json" \
-    repos/Hex-Dragon/PCL2/pulls | jq -r 'sort_by(.created_at) | last | .title')
+#!/bin/bash
 
-# 基于 PR 编号创建文件路径
-file_path="libraries/Homepage/PR#$number.xaml"
-previous_file_path="libraries/Homepage/PR#$((number - 1)).xaml"
+# 获取最新的 PR 编号和标题
+number=($(gh api -H "Accept: application/vnd.github+json" \
+    repos/Hex-Dragon/PCL2/pulls | jq -r '.[0:10] | .[].number'))
+title=($(gh api -H "Accept: application/vnd.github+json" \
+    repos/Hex-Dragon/PCL2/pulls | jq -r '.[0:10] | .[].title'))
 
-# 判断是否存在该文件
-if [ -e "$file_path" ]; then
-    echo "文件存在，无需更改"
+# 输出调试信息
+echo "Number array: ${number[@]}"
+echo "Title array: ${title[@]}"
+
+# 配置文件路径
+file_path="libraries/Homepage/IssueList.xaml"
+previous_file_path="libraries/Homepage/IssueList.xaml"
+
+# 删除旧的 IssueList.xaml 文件
+if [ -e "$previous_file_path" ]; then
+    echo "删除旧的 XAML 文件: $previous_file_path"
+    rm "$previous_file_path"
 else
-    echo "文件不存在，正在更新"
-    # 创建新 XAML 文件，填入对应的内容
-    cat <<EOF > "$file_path"
+    echo "没有找到旧的 XAML 文件: $previous_file_path"
+fi
+
+# 创建新的 IssueList.xaml 文件
+echo "创建新的 IssueList.xaml 文件"
+
+cat <<EOF > "$file_path"
 <local:MyCard Margin="0,0,0,15">
     <StackPanel Margin="20,14">
         <Grid>
@@ -23,53 +34,54 @@ else
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0">
-                <TextBlock FontSize="16"><Bold>社区快讯</Bold></TextBlock>
-                <TextBlock FontSize="14">社区用户正在参与制作更多有趣的新功能</TextBlock>
-                <TextBlock FontSize="14">他们正为 PCL 伟大的咕咕咕事业贡献自己的力量！</TextBlock>
+                <TextBlock FontSize="16"><Bold>Issue快讯</Bold></TextBlock>
+                <TextBlock FontSize="14">你可以查看实时Issue列表</TextBlock>
+                <TextBlock FontSize="14">提交Issue前可以瞄眼,请避免重复提交</TextBlock>
             </StackPanel>
             <local:MyIconTextButton Grid.Column="1" HorizontalAlignment="Right" EventType="打开网页" LogoScale="1"
-                Text="PRs" EventData="https://github.com/Hex-Dragon/PCL2/pulls" ToolTip="提交一个PCL Pull Requests 合并后可以获取活跃橙"
-                Logo="M256 170.666667a85.333333 85.333333 0 1 0 0 170.666666 85.333333 85.333333 0 0 0 0-170.666666zM85.333333 256a170.666667 170.666667 0 1 1 213.333334 165.290667V896a42.666667 42.666667 0 0 1-85.333334 0V421.290667A170.666667 170.666667 0 0 1 85.333333 256z m426.666667 0a42.666667 42.666667 0 0 1 42.666667-42.666667H682.666667A128 128 0 0 1 810.666667 341.333333v261.376a170.666667 170.666667 0 1 1-85.333334 0V341.333333a42.666667 42.666667 0 0 0-42.666666-42.666666H554.666667A42.666667 42.666667 0 0 1 512 256z m256 426.666667a85.333333 85.333333 0 1 0 0 170.666666 85.333333 85.333333 0 0 0 0-170.666666z"/>
+                Text="Issues" EventData="https://github.com/Hex-Dragon/PCL2/issues" ToolTip="提交一个PCL Issue 如果是Bug修复后可以获取活跃橙"
+                Logo="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0z M1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0z"/>
         </Grid>
         <Line X1="0" X2="100" Stroke="{DynamicResource ColorBrush6}" StrokeThickness="1.5" Stretch="Fill" Margin="0,8"/>
-        <TextBlock FontSize="16"><Bold>最新PR</Bold></TextBlock>
+        <TextBlock FontSize="16" Margin="13,0,0,0"><Bold>最新Issue [latest:10 5min reload]</Bold></TextBlock>
         <StackPanel>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="45" />
-                </Grid.RowDefinitions>
-                <local:MyListItem Title="PR#$number" Margin="-10,0,0,0" IsHitTestVisible="False" Info="$title" Grid.Row="0" Grid.Column="1"/>
-            </Grid>
-        </StackPanel>
-        <TextBlock FontSize="16"><Bold>你可以帮忙的PR</Bold></TextBlock>
-        <StackPanel>
-            <Grid>
-                <Grid.RowDefinitions>
+                    <RowDefinition Height="45" />
+                    <RowDefinition Height="45" />
+                    <RowDefinition Height="45" />
+                    <RowDefinition Height="45" />
+                    <RowDefinition Height="45" />
+                    <RowDefinition Height="45" />
+                    <RowDefinition Height="45" />
+                    <RowDefinition Height="45" />
                     <RowDefinition Height="45" />
                 </Grid.RowDefinitions>
-                <local:MyListItem Title="本地化：语言、配置项、时间 #4145" Margin="-10,0,0,0" IsHitTestVisible="False" Info="你可以协助社区工作者一同完善PCL的国际化工作" Grid.Row="0" Grid.Column="1"/>
-                <local:MyIconTextButton Grid.Column="1" HorizontalAlignment="Right" EventType="打开网页" LogoScale="1"
-                    Text="加入翻译队伍" EventData="https://weblate.tangge233.cn/engage/PCL/" 
-                    Logo="M640 416h256c35.36 0 64 28.48 64 64v416c0 35.36-28.48 64-64 64H480c-35.36 0-64-28.48-64-64V640h128c53.312 0 96-42.976 96-96V416zM64 128c0-35.36 28.48-64 64-64h416c35.36 0 64 28.48 64 64v416c0 35.36-28.48 64-64 64H128c-35.36 0-64-28.48-64-64V128z m128 276.256h46.72v-24.768h67.392V497.76h49.504V379.488h68.768v20.64h50.88V243.36H355.616v-34.368c0-10.08 1.376-18.784 4.16-26.112a10.56 10.56 0 0 0 1.344-4.16c0-0.896-3.2-1.792-9.6-2.72h-46.816v67.36H192v160.896z m46.72-122.368h67.392v60.48h-67.36V281.92z m185.664 60.48h-68.768V281.92h68.768v60.48z m203.84 488l19.264-53.632h100.384l19.264 53.632h54.976L732.736 576h-64.64L576 830.4h52.256z m33.024-96.256l37.12-108.608h1.376l34.368 108.608h-72.864zM896 320h-64a128 128 0 0 0-128-128v-64a192 192 0 0 1 192 192zM128 704h64a128 128 0 0 0 128 128v64a192 192 0 0 1-192-192z"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="400" />
+                </Grid.ColumnDefinitions>
+                <local:MyListItem Title="Issue#${number[0]}" Margin="5,0,0,0" IsHitTestVisible="False" Info="${title[0]}" Grid.Row="0" Grid.Column="1"/>
+                <local:MyListItem Title="Issue#${number[1]}" Margin="5,0,0,0" IsHitTestVisible="False" Info="${title[1]}" Grid.Row="1" Grid.Column="1"/>
+                <local:MyListItem Title="Issue#${number[2]}" Margin="5,0,0,0" IsHitTestVisible="False" Info="${title[2]}" Grid.Row="2" Grid.Column="1"/>
+                <local:MyListItem Title="Issue#${number[3]}" Margin="5,0,0,0" IsHitTestVisible="False" Info="${title[3]}" Grid.Row="3" Grid.Column="1"/>
+                <local:MyListItem Title="Issue#${number[4]}" Margin="5,0,0,0" IsHitTestVisible="False" Info="${title[4]}" Grid.Row="4" Grid.Column="1"/>
+                <local:MyListItem Title="Issue#${number[5]}" Margin="5,0,0,0" IsHitTestVisible="False" Info="${title[5]}" Grid.Row="5" Grid.Column="1"/>
+                <local:MyListItem Title="Issue#${number[6]}" Margin="5,0,0,0" IsHitTestVisible="False" Info="${title[6]}" Grid.Row="6" Grid.Column="1"/>
+                <local:MyListItem Title="Issue#${number[7]}" Margin="5,0,0,0" IsHitTestVisible="False" Info="${title[7]}" Grid.Row="7" Grid.Column="1"/>
+                <local:MyListItem Title="Issue#${number[8]}" Margin="5,0,0,0" IsHitTestVisible="False" Info="${title[8]}" Grid.Row="8" Grid.Column="1"/>
+                <local:MyListItem Title="Issue#${number[9]}" Margin="5,0,0,0" IsHitTestVisible="False" Info="${title[9]}" Grid.Row="9" Grid.Column="1"/>
             </Grid>
         </StackPanel>
     </StackPanel>
 </local:MyCard>
 EOF
-    # 更新 pages/UpdateHomepage.yml 的第 6 行
-    sed -i "6s/.*/- PR#$number/" pages/UpdateHomepage.yml
-fi
 
-# 删除旧的 PR 文件（如果存在）
-if [ -e "$previous_file_path" ]; then
-    echo "删除旧的 XAML 文件: $previous_file_path"
-    rm "$previous_file_path"
-else
-    echo "没有找到旧的 XAML 文件，Github提交推送"
-fi
-
-# 配置 Git 提交信息并推送
+# 配置 Git 提交信息并推送到指定仓库
 git config --local user.email "github-actions[bot]@users.noreply.github.com"
 git config --local user.name "github-actions[bot]"
+git remote set-url origin https://github.com/Joker2184/UpdateHomepage.git
+
+# 检查更改并推送
 git add *
-git diff-index --quiet HEAD || git commit -m "Update to PR#$number" && git push
+git diff-index --quiet HEAD || git commit -m "Update IssueList.xaml for Issue#${number[0]}" && git push origin main
