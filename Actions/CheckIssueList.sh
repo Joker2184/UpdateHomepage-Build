@@ -73,10 +73,12 @@ cat <<EOF > "$file_path"
 </local:MyCard>
 EOF
 
-# 配置 Git 提交信息并推送到指定仓库
 git config --local user.email "github-actions[bot]@users.noreply.github.com"
 git config --local user.name "github-actions[bot]"
-git remote set-url origin https://github.com/Joker2184/UpdateHomepage.git
+git remote set-url origin https://$GITHUB_ACTOR:${{ secrets.PATTOKEN }}@github.com/Joker2184/UpdateHomepage.git
+
+# 拉取远程更改并合并
+git pull --rebase origin main
 
 # 检查更改并推送
 git add *
