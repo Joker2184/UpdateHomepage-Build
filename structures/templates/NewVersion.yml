@@ -1,4 +1,5 @@
 components:
+ - New
  - Loading
 base: Card
 filter:
