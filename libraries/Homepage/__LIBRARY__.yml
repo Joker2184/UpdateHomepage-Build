@@ -1,5 +1,7 @@
 name: Update_homepage
 fill:
+  lastest_PR:  ${L_PR}
+  lastest_PR_Member:  ${L_PR_M}
   templates:
     - Luca
     - MarkdownCard
