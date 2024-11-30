@@ -1,5 +1,4 @@
 components:
-   
  - $MarkdownPresenter
 base: NewsCardBase
 filter:
