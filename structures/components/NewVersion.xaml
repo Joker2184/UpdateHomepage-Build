@@ -32,13 +32,3 @@
     <Line X1="0" X2="100" Stroke="{DynamicResource ColorBrush4}" StrokeThickness="1.2" Stretch="Fill" Margin="8,2"/>
 </StackPanel>
 </StackPanel>
-
-<StackPanel Style="{StaticResource ContentStack}" Margin="0,10,0,-10">
-<Border Style="{StaticResource VersionImageBorder}">
-<Border.Background>
-<ImageBrush ImageSource="${Image_link}" Stretch="UniformToFill" />
-</Border.Background>
-<Image Source="${Image_link}" Opacity="0" Stretch="Fill"/>
-
-</Border>
-</StackPanel>

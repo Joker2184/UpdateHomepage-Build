@@ -4,6 +4,7 @@ fill:
   version-id: ${file_name}
   title: 📰 ${file_name}
   Updatedate:  ${date}
+  Updatedate:  ${Writer}
   templates:
     - NewVersion
     - NewsCard
