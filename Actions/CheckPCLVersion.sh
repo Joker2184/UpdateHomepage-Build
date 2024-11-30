@@ -34,7 +34,7 @@ if [ -e "$file_path" ]; then
 else
     echo "文件不存在，正在更新"
     # 创建或更新文件内容，确保格式正确
-    echo -e "---\nnew: \"true\"\ndate: $created_at\nI_Link: $link\nWriter: Null\n---\n" > "$file_path"
+    echo "---\nnew: \"true\"\ndate: $created_at\nI_Link: $link\nWriter: Null\n---\n" > "$file_path"
     # 更新页面配置
     sed -i "2s/.*/- \"${version}\"/" pages/UpdateHomepage.yml
 fi
