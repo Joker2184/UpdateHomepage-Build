@@ -8,7 +8,4 @@
 
 详细请看 [B站直达](https://www.bilibili.com/opus/1007025206508650529?spm_id_from=333.999.0.0)
 
-
-### 吃瓜每一天 快乐每一天 Joker2184前方报道
-
 ![Nogg](https://pic.imgdb.cn/item/67502c7ed0e0a243d4dd60c7.png)
