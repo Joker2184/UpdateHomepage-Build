@@ -1,0 +1,9 @@
+name: PrSave
+fill:
+  canswap: true
+  s: true
+  isswaped: ${s}
+  templates:
+    - Luca
+    - MarkdownCard
+    - Raw
