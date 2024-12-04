@@ -1,0 +1,6 @@
+name: PrSave
+fill:
+  templates:
+    - Luca
+    - MarkdownCard
+    - Raw

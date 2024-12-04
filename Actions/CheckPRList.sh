@@ -4,7 +4,7 @@ title=$(gh api -H "Accept: application/vnd.github+json" \
     repos/Hex-Dragon/PCL2/pulls | jq -r 'sort_by(.created_at) | last | .title')
 
 # 基于 PR 编号创建文件路径
-file_path="libraries/Homepage/PR#$number.xaml"
+file_path="libraries/Homepage/PRSave/PR#$number.xaml"
 previous_file_path="libraries/Homepage/PR#$((number - 1)).xaml"
 
 # 判断是否存在该文件
