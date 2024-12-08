@@ -6,6 +6,6 @@ trigger-repo-build:
     - name: Trigger A and C Builds
       uses: peter-evans/repository-dispatch@v2
       with:
-        repository: 'Joker2184/Trigger-A-and-C-Repo-Builds'  # 配置文件所在仓库
+        repository: 'Joker2184/UpdateHomepage-Build'  # 修改为正确的仓库
         token: ${{ secrets.PAT_TOKEN }}
         event-type: trigger-a-c-build
