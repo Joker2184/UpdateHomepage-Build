@@ -40,7 +40,7 @@ else
 fi
 
 # 配置 Git 用户信息并提交更改
-    git config --local user.email "Joker2184@outlook.com"
+git config --local user.email "Joker2184@outlook.com"
 git config --local user.name "Joker2184Bot"
 git add *
 git diff-index --quiet HEAD || (git commit -m "Update to $version" && git push)
