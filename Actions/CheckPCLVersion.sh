@@ -52,4 +52,4 @@ fi
 git config --local user.email "Joker2184@outlook.com"
 git config --local user.name "Joker2184Bot"
 git add *
-git diff-index --quiet HEAD || (git commit -m "Update PCL to "${version}" && git push)
+git diff-index --quiet HEAD || (git commit -m "Update PCL to ${version}" && git push)
