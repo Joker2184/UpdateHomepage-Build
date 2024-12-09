@@ -1,29 +1,17 @@
 name: Check PCL Version
 on:
-  push:
-    branches:
-      - main  # 监听主分支上的 push 事件
-
+   schedule:
+    - cron:  '0/30 * * * *'
+   workflow_dispatch:
+      
 jobs:
-  check-pcl:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Run update script
-        id: run_script
-        run: sh Actions/CheckPCLVersion.sh
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  trigger-repo-build:
-    runs-on: ubuntu-latest
-    needs: check-pcl  # 表明依赖于 check-pcl 作业
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.head_commit.message, 'Update PCL version file') }}
-    steps:
-      - name: Trigger A and C Builds
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          repository: 'Joker2184/UpdateHomepage-Build'
-          token: ${{ secrets.PAT_TOKEN }}
-          event-type: trigger-a-c-build
+   check-pcl:
+      runs-on: ubuntu-latest
+      steps:
+       - name: 签出储存库
+         uses: actions/checkout@v4
+       - name: 运行更新脚本
+         id: run_script
+         run: sh Actions/CheckPCLVersion.sh
+         env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
