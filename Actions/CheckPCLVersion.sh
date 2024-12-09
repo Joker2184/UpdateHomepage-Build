@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # 获取版本号 (tag_name)
 version=$(gh api \
     -H "Accept: application/vnd.github+json" \
@@ -37,10 +39,17 @@ else
     echo "---\nnew: \"true\"\ndate: $created_at\nI_Link: $link\nWriter: Null\n---\n" > "$file_path"
     # 更新页面配置
     sed -i "2s/.*/- \"${version}\"/" pages/UpdateHomepage.yml
+
+    # 使用 GitHub API 触发 repository_dispatch 事件
+    curl -X POST \
+    -H "Accept: application/vnd.github.v3+json" \
+    -H "Authorization: token $GITHUB_TOKEN" \
+    https://api.github.com/repos/Joker2184/HomepageBuilder/dispatches \
+    -d '{"event_type": "trigger-a-build"}'
 fi
 
 # 配置 Git 用户信息并提交更改
 git config --local user.email "Joker2184@outlook.com"
 git config --local user.name "Joker2184Bot"
 git add *
-git diff-index --quiet HEAD || (git commit -m "Update PCL version file" && git push)
+git diff-index --quiet HEAD || (git commit -m "Update PCL to "${version}" && git push)
