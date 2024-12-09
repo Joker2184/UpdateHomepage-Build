@@ -41,7 +41,7 @@ else
     sed -i "2s/.*/- \"${version}\"/" pages/UpdateHomepage.yml
 
     # 使用 GitHub API 触发 repository_dispatch 事件
-curl -X POST \
+curl -v -X POST \
     -H "Accept: application/vnd.github.v3+json" \
     -H "Authorization: token $PAT_TOKEN" \
     https://api.github.com/repos/Joker2184/HomepageBuilder/dispatches \
