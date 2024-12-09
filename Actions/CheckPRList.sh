@@ -65,6 +65,12 @@ if [ -e "$previous_file_path" ]; then
     rm "$previous_file_path"
 else
     echo "没有找到旧的 XAML 文件，Github提交推送"
+    
+curl -v -X POST \
+    -H "Accept: application/vnd.github.v3+json" \
+    -H "Authorization: token $PAT_TOKEN" \
+    https://api.github.com/repos/Joker2184/HomepageBuilder/dispatches \
+    -d '{"event_type": "trigger-a-build"}'    
 fi
 
 # 配置 Git 提交信息并推送
