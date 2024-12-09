@@ -12,6 +12,6 @@ jobs:
          uses: actions/checkout@v4
        - name: 运行更新脚本
          id: run_script
-         run: sh Actions/CheckPCLVersion.sh
+         run: bash Actions/CheckPCLVersion.sh
          env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
