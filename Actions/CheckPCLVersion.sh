@@ -21,10 +21,10 @@ created_at=$(gh api \
 # 根据发布类型选择链接
 if [ "$release_type" == "true" ]; then
     # 如果是 pre-release，使用指定的链接
-    link="https://pic.imgdb.cn/item/66fde7a30a206445e36ebb11.png"
+    link="https://pic.imgdb.cn/item/66fde7a30a206445e36ebafe.png"
 else
     # 如果是正式版本，使用 I_Link 链接
-    link="https://pic.imgdb.cn/item/66fde7a30a206445e36ebafe.png"
+    link="https://pic.imgdb.cn/item/66fde7a30a206445e36ebb11.png"
 fi
 
 # 文件路径
@@ -43,7 +43,7 @@ else
     # 使用 GitHub API 触发 repository_dispatch 事件
     curl -X POST \
     -H "Accept: application/vnd.github.v3+json" \
-    -H "Authorization: token $GITHUB_TOKEN" \
+    -H "Authorization: token ${{ secrets.PAT_TOKEN }}" \
     https://api.github.com/repos/Joker2184/HomepageBuilder/dispatches \
     -d '{"event_type": "trigger-a-build"}'
 fi
