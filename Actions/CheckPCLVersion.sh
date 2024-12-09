@@ -19,7 +19,7 @@ created_at=$(gh api \
     repos/Hex-Dragon/PCL2/releases | grep -o '"created_at": *"[^"]*"' | head -n 1 | cut -d '"' -f 4 | cut -d 'T' -f 1)
 
 # 根据发布类型选择链接
-if [ "$release_type" == "true" ]; then
+if [ "$release_type" = "true" ]; then
     # 如果是 pre-release，使用指定的链接
     link="https://pic.imgdb.cn/item/66fde7a30a206445e36ebafe.png"
 else
@@ -42,10 +42,10 @@ else
 
     # 使用 GitHub API 触发 repository_dispatch 事件
     curl -X POST \
-    -H "Accept: application/vnd.github.v3+json" \
-    -H "Authorization: token ${{ secrets.PAT_TOKEN }}" \
-    https://api.github.com/repos/Joker2184/HomepageBuilder/dispatches \
-    -d '{"event_type": "trigger-a-build"}'
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: token ${{ secrets.PAT_TOKEN }}" \
+            https://api.github.com/repos/Joker2184/HomepageBuilder/dispatches \
+            -d '{"event_type": "trigger-a-build"}'
 fi
 
 # 配置 Git 用户信息并提交更改
