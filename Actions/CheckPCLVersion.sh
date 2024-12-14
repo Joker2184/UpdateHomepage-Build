@@ -18,14 +18,22 @@ created_at=$(gh api \
     -H "X-GitHub-Api-Version: 2022-11-28" \
     repos/Hex-Dragon/PCL2/releases | grep -o '"created_at": *"[^"]*"' | head -n 1 | cut -d '"' -f 4 | cut -d 'T' -f 1)
 
-# 根据发布类型选择链接
-if [ "$release_type" = "true" ]; then
-    # 如果是 pre-release，使用指定的链接
-    link="https://pic.imgdb.cn/item/66fde7a30a206445e36ebafe.png"
-else
-    # 如果是正式版本，使用 I_Link 链接
-    link="https://pic.imgdb.cn/item/66fde7a30a206445e36ebb11.png"
-fi
+# 获取最新提交的 commit 信息中的消息
+commit_message=$(gh api \
+    -H "Accept: application/vnd.github+json" \
+    -H "X-GitHub-Api-Version: 2022-11-28" \
+    /repos/Hex-Dragon/PCL2/commits | jq -r '.[0].commit.message')
+
+# 检查 commit_message 是否含有"正式版"
+if [[ "$commit_message" == *"正式版"* ]]; then
+    # 根据发布类型选择链接
+    if [ "$release_type" == "true" ]; then
+        # 如果是 pre-release，使用指定的链接
+        link="https://pic.imgdb.cn/item/66fde7a30a206445e36ebafe.png"
+    elif [ "$release_type" == "false" ]; then
+        # 如果是正式版本，使用指定的链接
+        link="https://pic.imgdb.cn/item/66fde7a30a206445e36ebb11.png"
+    fi
 
 # 文件路径
 file_path="libraries/$version.md"
