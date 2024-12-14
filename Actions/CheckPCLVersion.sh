@@ -29,10 +29,10 @@ if [[ "$commit_message" == *"正式版"* ]]; then
     # 根据发布类型选择链接
     if [ "$release_type" == "true" ]; then
         # 如果是 pre-release，使用指定的链接
-        link="https://pic.imgdb.cn/item/66fde7a30a206445e36ebafe.png"
+        link="https://pic.imgdb.cn/item/66fde7a30a206445e36ebb11.png"
     elif [ "$release_type" == "false" ]; then
         # 如果是正式版本，使用指定的链接
-        link="https://pic.imgdb.cn/item/66fde7a30a206445e36ebb11.png"
+        link="https://pic.imgdb.cn/item/66fde7a30a206445e36ebafe.png"
     fi
 
     # 文件路径
