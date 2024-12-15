@@ -1,7 +1,7 @@
 name: Check PR List
 on:
    schedule:
-    - cron:  '0/30 * * * *'
+    - cron:  '0/15 * * * *'
    workflow_dispatch:
       
 jobs:
