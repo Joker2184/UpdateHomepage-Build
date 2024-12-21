@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# 初始化文件更新标志
+file_updated=false
+
 # 获取最新的 PR 编号和标题
 number=$(gh api -H "Accept: application/vnd.github+json" \
     repos/Hex-Dragon/PCL2/pulls | jq -r 'sort_by(.created_at) | last | .number')
@@ -10,9 +13,9 @@ title=$(gh api -H "Accept: application/vnd.github+json" \
 # 基于 PR 编号创建文件路径
 file_path="libraries/Homepage/PRSave/PR#$number.xaml"
 
-# 判断是否存在该文件
+# 判断文件是否存在
 if [ -e "$file_path" ]; then
-    echo "文件存在，无需更改"
+    echo "文件已存在，无需更改"
 else
     echo "文件不存在，正在更新"
     # 创建新 XAML 文件，填入对应的内容
@@ -61,6 +64,12 @@ EOF
     # 更新 pages/UpdateHomepage.yml 的第 6 行
     sed -i "6s/.*/- PR#$number/" pages/UpdateHomepage.yml
 
+    # 设置文件更新标志
+    file_updated=true
+fi
+
+# 只有在文件更新时才触发 GitHub Action
+if [ "$file_updated" == true ]; then
     # 使用 GitHub API 触发 repository_dispatch 事件
     curl -v -X POST \
         -H "Accept: application/vnd.github.v3+json" \
