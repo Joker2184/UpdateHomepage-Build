@@ -69,7 +69,7 @@ EOF
 fi
 
 # 只有在文件更新时才触发 GitHub Action
-if [ "$file_updated" == true ]; then
+if [ "$file_updated" = true ]; then  # 使用 "= true" 进行比较
     # 使用 GitHub API 触发 repository_dispatch 事件
     curl -v -X POST \
         -H "Accept: application/vnd.github.v3+json" \
