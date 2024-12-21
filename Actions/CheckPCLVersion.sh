@@ -38,6 +38,9 @@ if [[ "$commit_message" == *"正式版"* ]]; then
     # 文件路径
     file_path="libraries/$version.md"
 
+    # 初始化文件更新标志
+    file_updated=false
+
     # 检查文件是否存在
     if [ -e "$file_path" ]; then
         echo "文件已存在，无需更改"
@@ -47,7 +50,11 @@ if [[ "$commit_message" == *"正式版"* ]]; then
         echo -e "---\nnew: \"true\"\ndate: $created_at\nI_Link: $link\nWriter: Null\n---\n" > "$file_path"
         # 更新页面配置
         sed -i "2s/.*/- \"${version}\"/" pages/UpdateHomepage.yml
+        file_updated=true
+    fi
 
+    # 只有在文件更新时才触发 GitHub Action
+    if [ "$file_updated" == true ]; then
         # 使用 GitHub API 触发 repository_dispatch 事件
         curl -v -X POST \
             -H "Accept: application/vnd.github.v3+json" \
