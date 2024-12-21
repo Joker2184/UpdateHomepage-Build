@@ -1,11 +1,14 @@
+#!/bin/bash
+
+# 获取最新的 PR 编号和标题
 number=$(gh api -H "Accept: application/vnd.github+json" \
     repos/Hex-Dragon/PCL2/pulls | jq -r 'sort_by(.created_at) | last | .number')
+
 title=$(gh api -H "Accept: application/vnd.github+json" \
     repos/Hex-Dragon/PCL2/pulls | jq -r 'sort_by(.created_at) | last | .title')
 
 # 基于 PR 编号创建文件路径
 file_path="libraries/Homepage/PRSave/PR#$number.xaml"
-previous_file_path="libraries/Homepage/PR#$((number - 1)).xaml"
 
 # 判断是否存在该文件
 if [ -e "$file_path" ]; then
@@ -57,24 +60,17 @@ else
 EOF
     # 更新 pages/UpdateHomepage.yml 的第 6 行
     sed -i "6s/.*/- PR#$number/" pages/UpdateHomepage.yml
-fi
 
-# 删除旧的 PR 文件（如果存在）
-if [ -e "$previous_file_path" ]; then
-    echo "删除旧的 XAML 文件: $previous_file_path"
-    rm "$previous_file_path"
-else
-    echo "没有找到旧的 XAML 文件，Github提交推送"
-    
-curl -v -X POST \
-    -H "Accept: application/vnd.github.v3+json" \
-    -H "Authorization: token $PAT_TOKEN" \
-    https://api.github.com/repos/Joker2184/HomepageBuilder/dispatches \
-    -d '{"event_type": "trigger-a-build"}'    
+    # 使用 GitHub API 触发 repository_dispatch 事件
+    curl -v -X POST \
+        -H "Accept: application/vnd.github.v3+json" \
+        -H "Authorization: token $PAT_TOKEN" \
+        https://api.github.com/repos/Joker2184/HomepageBuilder/dispatches \
+        -d '{"event_type": "trigger-a-build"}'
 fi
 
 # 配置 Git 提交信息并推送
 git config --local user.email "github-actions[bot]@users.noreply.github.com"
 git config --local user.name "github-actions[bot]"
 git add *
-git diff-index --quiet HEAD || git commit -m "Update to PR#$number" && git push
+git diff-index --quiet HEAD || (git commit -m "Update to PR#$number" && git push)
