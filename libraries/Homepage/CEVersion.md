@@ -17,16 +17,4 @@ PCL2 Community Edition（PCL2 社区版，或 PCL2-CE，简称 CE）是由 PCL-C
 
 欢迎大家试试看！
 
-## 新功能
-
-Quilt 支持 ✔️
-
-资源收藏夹✔️
-
-资源包和光影包下载✔️
-
-资源管理✔️
-
-## 获取
-
 你可以在 [这里](https://github.com/PCL-Community/PCL2-CE) 获取社区版源代码和正式发布版本。
