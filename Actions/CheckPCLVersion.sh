@@ -47,7 +47,7 @@ if [[ "$commit_message" == *"正式版"* ]]; then
     else
         echo "文件不存在，正在更新"
         # 创建或更新文件内容，确保格式正确
-        echo -e "---\nnew: \"true\"\ndate: $created_at\nI_Link: $link\nWriter: Null\n---\n" > "$file_path"
+        echo -e "---\nnew: \"true\"\ndate: $created_at\nI_Link: $link\nWriter: 零棱ZeroPrism_CN\n---\n" > "$file_path"
         # 更新页面配置
         sed -i "2s/.*/- \"${version}\"/" pages/UpdateHomepage.yml
         file_updated=true
