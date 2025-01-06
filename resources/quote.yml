@@ -1,43 +1,53 @@
 Styles:
- - Key: Quote
-   Target: Section
-   Setters:
+  - Key: Quote
+    Target: Section
+    Setters:
       BorderThickness: 5,0,0,0
       BorderBrush: "{DynamicResource ColorBrush4}"
       Padding: 10,5
       Margin: 0,5
-  
- - Key: cautionQuote
-   Target: Section
-   BasedOn: Quote
-   Setters:
+
+  - Key: cautionQuote
+    Target: Section
+    Setters:
+      BorderThickness: 5,0,0,0
       BorderBrush: "#CC4455"
+      Padding: 10,5
+      Margin: 0,5
       Background: "#33CC4455"
 
- - Key: noteQuote
-   Target: Section
-   BasedOn: Quote
-   Setters:
+  - Key: noteQuote
+    Target: Section
+    Setters:
+      BorderThickness: 5,0,0,0
       BorderBrush: "#4455AA"
+      Padding: 10,5
+      Margin: 0,5
       Background: "#334455AA"
 
- - Key: tipQuote
-   Target: Section
-   BasedOn: Quote
-   Setters:
+  - Key: tipQuote
+    Target: Section
+    Setters:
+      BorderThickness: 5,0,0,0
       BorderBrush: "#44AA55"
+      Padding: 10,5
+      Margin: 0,5
       Background: "#3344AA55"
 
- - Key: importantQuote
-   Target: Section
-   BasedOn: Quote
-   Setters:
+  - Key: importantQuote
+    Target: Section
+    Setters:
+      BorderThickness: 5,0,0,0
       BorderBrush: "#AA55BB"
+      Padding: 10,5
+      Margin: 0,5
       Background: "#33AA55BB"
 
- - Key: warningQuote
-   Target: Section
-   BasedOn: Quote
-   Setters:
+  - Key: warningQuote
+    Target: Section
+    Setters:
+      BorderThickness: 5,0,0,0
       BorderBrush: "#DDBB44"
+      Padding: 10,5
+      Margin: 0,5
       Background: "#33DDBB44"
