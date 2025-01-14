@@ -1,8 +1,9 @@
 cards:
-- CEVersion
+- NextVersionNews
 - "2.8.12"
 - Historyline
 - History
 - Newsline
+- CEVersion
 - PR#5415
 - NewFooter
