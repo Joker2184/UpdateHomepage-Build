@@ -62,7 +62,7 @@ else
 </local:MyCard>
 EOF
     # 更新 pages/UpdateHomepage.yml 的第 6 行
-    sed -i "7s/.*/- PR#$number/" pages/UpdateHomepage.yml
+    sed -i "8s/.*/- PR#$number/" pages/UpdateHomepage.yml
 
     # 设置文件更新标志
     file_updated=true
