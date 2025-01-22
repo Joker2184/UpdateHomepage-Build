@@ -26,6 +26,11 @@ PCL2 Community Edition（PCL2 社区版，或 PCL2-CE，简称 CE）是由 PCL-C
 
 如果登录不了GitHub 用户群也提供了备用下载（不保证为最新版本）
 
-[下载链接1](http://swanet.cn:5244/PCL2-CE)
+[@Lzasn](https://lzasn.xyz:521/Software/Windows/PCL2-CE)
 
-[下载链接2](https://pclhomeplazaoss.lingyunawa.top:26993/Homepages/CESAVE)
+[@myxxr](http://swanet.cn:5244/PCL2-CE)
+
+[@PCLHomeplazaOSS](https://pclhomeplazaoss.lingyunawa.top:26993/Homepages/CESAVE)
+
+
+
