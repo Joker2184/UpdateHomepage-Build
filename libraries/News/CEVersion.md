@@ -20,10 +20,12 @@ PCL2 Community Edition（PCL2 社区版，或 PCL2-CE，简称 CE）是由 PCL-C
 
 欢迎大家试试看！
 
+功能速览宣传片：[B站@鸽秋咕咕咕](https://www.bilibili.com/video/BV1w5wheQEAy) 
+
 你可以在 [这里](https://github.com/PCL-Community/PCL2-CE) 获取社区版源代码和正式发布版本。
 
 如果登录不了GitHub 用户群也提供了备用下载（不保证为最新版本）
 
-你可以在 [下载链接1](http://swanet.cn:5244/PCL2-CE) 获取PCL-CE。
+[下载链接1](http://swanet.cn:5244/PCL2-CE)
 
-你可以在 [下载链接2](https://pclhomeplazaoss.lingyunawa.top:26993/Homepages/CESAVE) 获取PCL-CE。
+[下载链接2](https://pclhomeplazaoss.lingyunawa.top:26993/Homepages/CESAVE)
