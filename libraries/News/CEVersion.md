@@ -32,7 +32,7 @@ PCL2 Community Edition（PCL2 社区版，或 PCL2-CE，简称 CE）是由 PCL-C
 
 [myxxr-B](http://106.14.45.80:5244/PCL2-CE)
 
-[Ad-closeNN](https://ghproxy.cn/https://github.com/PCL-Community/PCL2-CE/releases/latest/download/PCL2_CE.exe)
+[ghproxy](https://ghproxy.cn/https://github.com/PCL-Community/PCL2-CE/releases/latest/download/PCL2_CE.exe)
 
 [PCLHomeplazaOSS](https://pclhomeplazaoss.lingyunawa.top:26993/Homepages/CESAVE)
 
