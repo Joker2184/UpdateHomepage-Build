@@ -7,10 +7,7 @@
 > PCL2 社区版下载不需要您支付任何费用。PCL-Community 组织及其成员**始终建议您使用官方版 PCL2**。  
 >  
 > 社区版出现问题请向社区版仓库反馈，不要向主线仓库反馈！
-
- 
-
-> [!WARNING]  
+> 
 > PCL2 社区版可能于未来放弃对 Windows 10 以下版本系统的支持，您可能需要升级到 Windows 10 或更高版本以继续使用。
 
 ## 介绍
@@ -24,3 +21,8 @@ PCL2 Community Edition（PCL2 社区版，或 PCL2-CE，简称 CE）是由 PCL-C
 欢迎大家试试看！
 
 你可以在 [这里](https://github.com/PCL-Community/PCL2-CE) 获取社区版源代码和正式发布版本。
+
+如果登录不了GitHub 用户群也提供了备用下载（不保证为最新版本）
+
+你可以在 [下载链接1](http://swanet.cn:5244/PCL2-CE) 获CE最新版本。
+你可以在 [下载链接2](https://pclhomeplazaoss.lingyunawa.top:26993/Homepages/CESAVE) 获取CE最新版本。
