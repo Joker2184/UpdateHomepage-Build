@@ -3,7 +3,7 @@ fill:
   canswap: true
   s: true
   isswaped: ${s}
-  Margin: 0,0,0,5
+  margin: 0,0,0,5
   templates:
     - Luca
     - MarkdownCard
