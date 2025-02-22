@@ -5,6 +5,8 @@ fill:
   title: 📰 ${file_name}
   Updatedate:  ${date}
   UpdateWriter:  ${Writer}
+  VersionType:  ${Type}
+  VersionNote:  ${Note}
   templates:
     - NewVersion
     - NewsCard
