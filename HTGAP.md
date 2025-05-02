@@ -31,18 +31,16 @@ Deepseek的命令：
 
 Github操作：
 在libraries/Verison文件夹下
-创建一个新Markdown文件
+创建一个新Markdown文件 如果这是一个快照版更新
 ```
-如快照版则：
-配置构建器
 ---
-date: XXXX-X-XX 
-I_Link: https://pic1.imgdb.cn/item/66fde7a30a206445e36ebb11.png
-Writer: XXXXXX
-Type: 快照版
-Note: 本次更新为快照版更新，仅赞助者可以试用。当更新内容稳定后，即会更新至正式版。
+date: XXXX-X-XX 日期 YYYY-MM-DD
+I_Link: https://pic1.imgdb.cn/item/66fde7a30a206445e36ebb11.png 不要动
+Writer: XXXXXX 作者 
+Type: 快照版 不要动
+Note: 本次更新为快照版更新，仅赞助者可以试用。当更新内容稳定后，即会更新至正式版。 不要动
 ---
-# PCL 现已支持下载资源包、光影包和数据包！
+# PCL 现已支持下载资源包、光影包和数据包！ 
 
 非常感谢 Pigeon0v0 提供的帮助！
 
@@ -50,7 +48,8 @@ Note: 本次更新为快照版更新，仅赞助者可以试用。当更新内�
 ## 更新亮点
 - **支持下载资源包、光影包、数据包**  
   （[#44](https://github.com/Hex-Dragon/PCL2/issues/44)、[#396](https://github.com/Hex-Dragon/PCL2/issues/396)、[#2991](https://github.com/Hex-Dragon/PCL2/issues/2991)，@ZerkyLiu、@WForst-Breeze，PR @Pigeon0v0）
-   ![1](https://i0.hdslb.com/bfs/new_dyn/56fa1f459ef5560eed50a1e09cc024cb11343203.png)[图片是必要的 手动加入]
+
+![1](https://i0.hdslb.com/bfs/new_dyn/56fa1f459ef5560eed50a1e09cc024cb11343203.png)[图片是必要的 手动加入]
 
 ...
 
