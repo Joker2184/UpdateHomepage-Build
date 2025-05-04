@@ -42,6 +42,7 @@ def save_release_to_markdown(release_info):
                f"---\n\n"
     content = f"# {release_info['name']}\n\n" \
               f"**版本号**: {release_info['tag_name']}\n\n" \
+              f"\n{release_info['body']}\n\n" \
               f"[查看 Release]({release_info['html_url']})"
     try:
         with open(filename, "w", encoding="utf-8") as file:
