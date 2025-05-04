@@ -17,4 +17,4 @@ jobs:
         run: pip install requests  # 安装必要依赖
 
       - name: Execute script
-        run: python UpdateHomepage-Build/Actions/get_latest_release.py  # 完整路径执行脚本
+        run: python Actions/get_latest_release.py  # 完整路径执行脚本
