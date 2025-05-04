@@ -1,34 +1,14 @@
-name: Scheduled Release Check
+name: Run Script
 
 on:
-  schedule:
-    # 每15分钟运行一次 (UTC时间)
-    - cron: "*/15 * * * *"
+  workflow_dispatch:  # 纯手动触发
 
 jobs:
-  check-release:
+  run-script:
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
-
-    - name: Install dependencies
-      run: pip install requests
-
-    - name: Run release checker
-      run: |
-        # 运行你的脚本
-        python get_latest_release.py
-        
-        # 显示生成的文件 (调试用)
-        echo "Generated files:"
-        ls -l temp/
-
-        # 可选：如果有文件变更则发送通知
-        # git diff && echo "Changes detected!"
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - run: python your_script.py  # 替换为你的脚本文件名
