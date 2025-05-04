@@ -1,4 +1,4 @@
-name: Run Script
+name: Run Release Script
 
 on:
   workflow_dispatch:  # 纯手动触发
@@ -7,8 +7,14 @@ jobs:
   run-script:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4  # 检出仓库代码
+      
       - uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
-      - run: python your_script.py  # 替换为你的脚本文件名
+          python-version: '3.10'  # 指定Python版本
+          
+      - name: Install dependencies
+        run: pip install requests  # 安装必要依赖
+
+      - name: Execute script
+        run: python UpdateHomepage-Build/Actions/get_latest_release.py  # 完整路径执行脚本
