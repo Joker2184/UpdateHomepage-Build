@@ -1,18 +1,34 @@
-name: Check PCL Version
+name: Scheduled Release Check
+
 on:
-   schedule:
-    - cron: '0/15 * * * *'
-   workflow_dispatch:
-      
+  schedule:
+    # 每15分钟运行一次 (UTC时间)
+    - cron: "*/15 * * * *"
+
 jobs:
-   check-pcl:
-      runs-on: ubuntu-latest
-      steps:
-       - name: 签出储存库
-         uses: actions/checkout@v4
-       - name: 运行更新脚本
-         id: run_script
-         run: bash Actions/CheckPCLVersion.sh
-         env:
-            PAT_TOKEN: ${{ secrets.PAT_TOKEN }}  # 传递 PAT_TOKEN 环境变量
-            GH_TOKEN: ${{ github.token }}  # 设置 GitHub 自动生成的 GH_TOKEN
+  check-release:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: pip install requests
+
+    - name: Run release checker
+      run: |
+        # 运行你的脚本
+        python get_latest_release.py
+        
+        # 显示生成的文件 (调试用)
+        echo "Generated files:"
+        ls -l temp/
+
+        # 可选：如果有文件变更则发送通知
+        # git diff && echo "Changes detected!"
