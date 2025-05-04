@@ -1,4 +1,5 @@
 import requests
+import os  # 新增导入 os 模块
 
 def get_latest_release():
     """
@@ -31,6 +32,9 @@ def save_release_to_markdown(release_info):
     
     :param release_info: 包含 release 信息的字典
     """
+    # 新增：自动创建 temp 文件夹（如果不存在）
+    os.makedirs("temp", exist_ok=True)
+    
     filename = f"temp/{release_info['tag_name']}.md"  # 修改输出路径为 temp 文件夹
     date = release_info['published_at'].split("T")[0]  # 仅保留年月日
     metadata = f"---\n" \
