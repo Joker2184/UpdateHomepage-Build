@@ -1,0 +1,7 @@
+<local:MyCard Title="">
+    <StackPanel Margin="25,30,25,30">
+        <TextBlock Margin="0,0,0,4" Foreground="{DynamicResource ColorBrush2}"
+                   Text="403" FontSize="70" TextAlignment = "Center" FontWeight="Bold"/>
+        <TextBlock Margin="0,0,0,4" Foreground="{DynamicResource ColorBrush3}" FontSize="16"
+                   Text="虽然但是 我不想更新.jpg 就当炸了吧" TextAlignment = "Center"/>
+    </StackPanel>
