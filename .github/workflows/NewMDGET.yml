@@ -1,15 +1,15 @@
-name: Sync PCL Changelog with Fixed Front Matter
+name: Sync PCL Latest Release
 
 on:
   schedule:
-    - cron: '0 * * * *'  # 每小时一次
-  workflow_dispatch:
+    - cron: '0 * * * *'  # 每小时运行一次（UTC 时间）
+  workflow_dispatch:      # 允许手动触发
 
 jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: 🛎️ Checkout target repo
+      - name: 🛎️ Checkout Repository
         uses: actions/checkout@v4
         with:
           repository: Joker2184/UpdateHomepage-Build
@@ -21,55 +21,20 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: 🔍 Fetch Latest PCL Release and Generate Markdown
-        run: |
-          import requests
-          import os
-          from datetime import datetime, timezone
+      - name: 📦 Install Dependencies
+        run: pip install requests
 
-          SNAPSHOT_DIR = "libraries/Verison/Snapshot"
-          os.makedirs(SNAPSHOT_DIR, exist_ok=True)
+      - name: ▶️ Run Release Fetcher
+        run: python Actions/get_latest_release.py
 
-          # === 固定 Front Matter 模板（仅 date 动态）===
-          FRONT_MATTER_TEMPLATE = '''---
-date: {date}
-I_Link: https://pic1.imgdb.cn/item/66fde7a30a206445e36ebb11.png
-Writer: ZeroPrism
-Type: 快照版
-Note: 本次更新为快照版更新，仅赞助者可以试用。当更新内容稳定后，即会更新至正式版。
----'''
-
-          # 获取最新 Release
-          latest_resp = requests.get("https://api.github.com/repos/Meloong-Git/PCL/releases/latest")
-          if latest_resp.status_code != 200:
-              raise Exception(f"Failed to get latest release: {latest_resp.status_code}")
-
-          release = latest_resp.json()
-          tag = release["tag_name"]
-          published_at = release["published_at"]  # ISO 8601 格式，如 "2024-06-15T10:30:00Z"
-          body = release["body"]
-
-          filepath = f"{SNAPSHOT_DIR}/{tag}.md"
-
-          # 如果已存在，跳过
-          if os.path.exists(filepath):
-              print(f"⏩ {tag}.md already exists. Skipping.")
-              exit(0)
-
-          # 构建完整内容
-          full_content = FRONT_MATTER_TEMPLATE.format(date=published_at) + "\n\n" + body
-
-          # 保存文件
-          with open(filepath, "w", encoding="utf-8") as f:
-              f.write(full_content)
-
-          print(f"✅ Saved {filepath} with date={published_at}")
-
-      - name: 💾 Commit and Push
+      - name: 💾 Commit and Push (if new file)
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
-          git diff --staged --quiet && echo "No changes to commit." && exit 0
-          git commit -m "feat(snapshot): add PCL ${{ github.event.release.tag_name || 'latest' }} changelog"
-          git push
+          if ! git diff --staged --quiet; then
+            git commit -m "feat(snapshot): add new PCL release changelog"
+            git push
+          else
+            echo "⏭️ 无变更，跳过推送"
+          fi
