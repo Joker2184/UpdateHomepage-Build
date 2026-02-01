@@ -1,61 +1,75 @@
-name: Sync PCL Changelog
+name: Sync PCL Changelog with Fixed Front Matter
 
 on:
   schedule:
-    - cron: '0 * * * *'  # 每小时 UTC 时间 0 分运行
-  workflow_dispatch:      # 允许手动触发
+    - cron: '0 * * * *'  # 每小时一次
+  workflow_dispatch:
 
 jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout target repo
+      - name: 🛎️ Checkout target repo
         uses: actions/checkout@v4
         with:
           repository: Joker2184/UpdateHomepage-Build
-          token: ${{ secrets.PAT }}  # 需在 Secrets 中设置 PAT
+          token: ${{ secrets.PAT_TOKEN }}
+          fetch-depth: 1
 
-      - name: Set up Python
+      - name: 🐍 Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.11'
 
-      - name: Install dependencies
-        run: pip install requests
-
-      - name: Fetch and save latest PCL changelog
+      - name: 🔍 Fetch Latest PCL Release and Generate Markdown
         run: |
-          python <<'EOF'
-          import requests, os, json, sys
-          
-          # 获取最新 tag
-          r = requests.get("https://api.github.com/repos/Meloong-Git/PCL/releases/latest")
-          tag = r.json()["tag_name"]
-          filename = f"libraries/Verison/Snapshot/{tag}.md"
-          
-          if os.path.exists(filename):
-              print(f"{tag} already exists, skip.")
-              sys.exit(0)
-          
-          # 获取 body
-          r2 = requests.get(f"https://api.github.com/repos/Meloong-Git/PCL/releases/tags/{tag}")
-          body = r2.json()["body"]
-          
-          os.makedirs(os.path.dirname(filename), exist_ok=True)
-          with open(filename, "w") as f:
-              f.write(body)
-          
-          print(f"Saved {filename}")
-          EOF
+          import requests
+          import os
+          from datetime import datetime, timezone
 
-      - name: Commit and push if changed
+          SNAPSHOT_DIR = "libraries/Verison/Snapshot"
+          os.makedirs(SNAPSHOT_DIR, exist_ok=True)
+
+          # === 固定 Front Matter 模板（仅 date 动态）===
+          FRONT_MATTER_TEMPLATE = '''---
+date: {date}
+I_Link: https://pic1.imgdb.cn/item/66fde7a30a206445e36ebb11.png
+Writer: ZeroPrism
+Type: 快照版
+Note: 本次更新为快照版更新，仅赞助者可以试用。当更新内容稳定后，即会更新至正式版。
+---'''
+
+          # 获取最新 Release
+          latest_resp = requests.get("https://api.github.com/repos/Meloong-Git/PCL/releases/latest")
+          if latest_resp.status_code != 200:
+              raise Exception(f"Failed to get latest release: {latest_resp.status_code}")
+
+          release = latest_resp.json()
+          tag = release["tag_name"]
+          published_at = release["published_at"]  # ISO 8601 格式，如 "2024-06-15T10:30:00Z"
+          body = release["body"]
+
+          filepath = f"{SNAPSHOT_DIR}/{tag}.md"
+
+          # 如果已存在，跳过
+          if os.path.exists(filepath):
+              print(f"⏩ {tag}.md already exists. Skipping.")
+              exit(0)
+
+          # 构建完整内容
+          full_content = FRONT_MATTER_TEMPLATE.format(date=published_at) + "\n\n" + body
+
+          # 保存文件
+          with open(filepath, "w", encoding="utf-8") as f:
+              f.write(full_content)
+
+          print(f"✅ Saved {filepath} with date={published_at}")
+
+      - name: 💾 Commit and Push
         run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
-          if ! git diff --staged --quiet; then
-            git commit -m "feat(snapshot): add PCL ${{ github.event.release.tag_name || 'latest' }} changelog"
-            git push
-          else
-            echo "No changes, skip push."
-          fi
+          git diff --staged --quiet && echo "No changes to commit." && exit 0
+          git commit -m "feat(snapshot): add PCL ${{ github.event.release.tag_name || 'latest' }} changelog"
+          git push
