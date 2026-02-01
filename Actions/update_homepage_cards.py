@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-将 pages/UpdateHomepage.yml 中 cards 列表的第一项替换为指定 tag，
-并确保其以双引号形式输出（防止 2.10 → 2.1）。
+安全更新 pages/UpdateHomepage.yml 的 cards 第一项为 "最新tag"
+不依赖 yaml.scalarstring，纯文本处理，确保输出为:
+  - "2.12.3"
 """
 
-import yaml
-from yaml.scalarstring import DoubleQuotedScalarString
 import sys
 import os
+import re
 
 HOMEPAGE_YML = "pages/UpdateHomepage.yml"
 
@@ -18,34 +18,48 @@ def update_first_card(tag):
         sys.exit(1)
 
     with open(HOMEPAGE_YML, "r", encoding="utf-8") as f:
-        data = yaml.safe_load(f)
+        lines = f.readlines()
 
-    if not isinstance(data.get("cards"), list) or len(data["cards"]) == 0:
-        print("❌ cards 字段无效", file=sys.stderr)
-        sys.exit(1)
+    # 找到 cards: 下的第一项（假设格式为 - "x.x.x" 或 - x.x.x）
+    in_cards = False
+    updated = False
+    new_lines = []
 
-    current = data["cards"][0]
-    # 去除可能的引号后比较
-    current_clean = str(current).strip('"\'')
-    if current_clean == tag:
-        print(f"⏩ cards[0] 已是 {tag}，无需更新")
+    for line in lines:
+        stripped = line.strip()
+        if stripped == "cards:":
+            in_cards = True
+            new_lines.append(line)
+            continue
+
+        if in_cards and stripped.startswith("-"):
+            # 提取当前值（去除 - 和引号）
+            current_val = stripped[1:].strip().strip('"\'')
+            if current_val == tag:
+                print(f"⏩ cards[0] 已是 {tag}，无需更新")
+                return
+
+            # 替换为标准格式: - "tag"
+            indent = len(line) - len(line.lstrip())
+            new_line = " " * indent + f'- "{tag}"\n'
+            new_lines.append(new_line)
+            updated = True
+            in_cards = False  # 只改第一个
+        else:
+            new_lines.append(line)
+            if in_cards and stripped == "":
+                # 空行表示 cards 结束（可选）
+                in_cards = False
+
+    if not updated:
+        print("⚠️ 未找到 cards 列表中的第一项，跳过更新", file=sys.stderr)
         return
 
-    # 使用 DoubleQuotedScalarString 确保输出为 "tag"
-    data["cards"][0] = DoubleQuotedScalarString(tag)
-
-    # 保留其他元素原样（不强制加引号）
+    # 写回文件
     with open(HOMEPAGE_YML, "w", encoding="utf-8") as f:
-        yaml.dump(
-            data,
-            f,
-            allow_unicode=True,
-            default_flow_style=False,
-            sort_keys=False,
-            indent=2
-        )
+        f.writelines(new_lines)
 
-    print(f"✅ 更新 cards[0] 为: \"{tag}\"")
+    print(f'✅ 成功更新 cards[0] 为: "{tag}"')
 
 
 if __name__ == "__main__":
