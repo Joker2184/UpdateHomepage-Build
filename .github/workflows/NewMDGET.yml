@@ -1,0 +1,61 @@
+name: Sync PCL Changelog
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # 每小时 UTC 时间 0 分运行
+  workflow_dispatch:      # 允许手动触发
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout target repo
+        uses: actions/checkout@v4
+        with:
+          repository: Joker2184/UpdateHomepage-Build
+          token: ${{ secrets.PAT }}  # 需在 Secrets 中设置 PAT
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Fetch and save latest PCL changelog
+        run: |
+          python <<'EOF'
+          import requests, os, json, sys
+          
+          # 获取最新 tag
+          r = requests.get("https://api.github.com/repos/Meloong-Git/PCL/releases/latest")
+          tag = r.json()["tag_name"]
+          filename = f"libraries/Verison/Snapshot/{tag}.md"
+          
+          if os.path.exists(filename):
+              print(f"{tag} already exists, skip.")
+              sys.exit(0)
+          
+          # 获取 body
+          r2 = requests.get(f"https://api.github.com/repos/Meloong-Git/PCL/releases/tags/{tag}")
+          body = r2.json()["body"]
+          
+          os.makedirs(os.path.dirname(filename), exist_ok=True)
+          with open(filename, "w") as f:
+              f.write(body)
+          
+          print(f"Saved {filename}")
+          EOF
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add .
+          if ! git diff --staged --quiet; then
+            git commit -m "feat(snapshot): add PCL ${{ github.event.release.tag_name || 'latest' }} changelog"
+            git push
+          else
+            echo "No changes, skip push."
+          fi
