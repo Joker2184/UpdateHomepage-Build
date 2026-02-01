@@ -8,7 +8,7 @@
     <StackPanel VerticalAlignment="Center" Margin="0,0,0,4">
 <TextBlock FontSize="18" Foreground="{DynamicResource ColorBrush3}"><Bold>PCL2 新闻速报</Bold></TextBlock>
     <TextBlock FontSize="12" Foreground="{DynamicResource ColorBrush3}" Text="快速更新 - HomepageBuilder 构建生成 - PCLHomeplazaOSS 托管服务"/>
-    <TextBlock FontSize="12" Foreground="{DynamicResource ColorBrush3}" Text="更新时间：看到就写/入群催更"/>
+    <TextBlock FontSize="12" Foreground="{DynamicResource ColorBrush3}" Text="本次更新已完成自动化集成 进入内测 如有问题请提Issue"/>
     <local:MyTextButton FontSize="12" Foreground="{DynamicResource ColorBrush3}" Text="CC BY-NC-SA 4.0 - 基于 News 设计 - Designed by 最亮的信标" EventType="打开网页"
     EventData="https://github.com/Light-Beacon/PCL2-NewsHomepage/blob/main/LICENSE-CONTENT"/>
     </StackPanel>
