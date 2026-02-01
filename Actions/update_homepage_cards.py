@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """
-将 pages/UpdateHomepage.yml 中 cards 列表的第一项替换为指定 tag。
-保持其他项不变。
+将 pages/UpdateHomepage.yml 中 cards 列表的第一项替换为指定 tag，
+并确保其以双引号形式输出（防止 2.10 → 2.1）。
 """
 
 import yaml
+from yaml.scalarstring import DoubleQuotedScalarString
 import sys
 import os
 
@@ -23,14 +24,17 @@ def update_first_card(tag):
         print("❌ cards 字段无效", file=sys.stderr)
         sys.exit(1)
 
-    current = str(data["cards"][0]).strip('"')
-    if current == tag:
+    current = data["cards"][0]
+    # 去除可能的引号后比较
+    current_clean = str(current).strip('"\'')
+    if current_clean == tag:
         print(f"⏩ cards[0] 已是 {tag}，无需更新")
         return
 
-    # 替换为带引号的字符串
-    data["cards"][0] = f'"{tag}"'
+    # 使用 DoubleQuotedScalarString 确保输出为 "tag"
+    data["cards"][0] = DoubleQuotedScalarString(tag)
 
+    # 保留其他元素原样（不强制加引号）
     with open(HOMEPAGE_YML, "w", encoding="utf-8") as f:
         yaml.dump(
             data,
